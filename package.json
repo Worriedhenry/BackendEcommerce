@@ -1,0 +1,27 @@
+{
+  "name": "backendecommerce",
+  "version": "1.0.0",
+  "description": "Backend For Ecommerce website Flipkart clone",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Worriedhenry/BackendEcommerce.git"
+  },
+  "author": "Ankit Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Worriedhenry/BackendEcommerce/issues"
+  },
+  "homepage": "https://github.com/Worriedhenry/BackendEcommerce#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3",
+    "nodemon": "^2.0.22"
+  }
+}
