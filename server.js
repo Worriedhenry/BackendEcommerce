@@ -14,7 +14,7 @@ app.use(express.json());
 app.get("/",(req,res)=>{
     res.status(200).send("Ok")
 })
-
+app.use("/",require("./Routes/index"))
 
 
 
