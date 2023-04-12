@@ -4,7 +4,6 @@ module.exports.home=function(req,res){
     
 }
 
-
 module.exports.register=function(req,res){
     Buyer.findOne({phone_no:req.body.phone_no},function(error,user){
         if(error){
@@ -29,11 +28,23 @@ module.exports.register=function(req,res){
 }
 
 module.exports.login=function(req,res){
-    //ye ho jaayega 
+    Buyer.findOne({phone_no:req.body.phone_no},function(error,user){
+        if(error){
+            console.log("Oops ! error in SignIn");
+            return ;
+        }
+        if(user){
+            if(user.password != req.body.password){
+                return res.redirect("/user/profile")
+            }
+        }
+        else{
+            return res.redirect("back")
+        }
+    })
 
 }
-
-module.exports.getUserProfile = function(req,res){
+module.exports.getprofile = function(req,res){
     
     Buyer.findById(req.user.id,function(err,user){
         if(user){

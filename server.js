@@ -11,10 +11,17 @@ app.use(express.json());
 
 
 // Api's
+const usersController=require("../controllers/userController")
+
 app.get("/",(req,res)=>{
     res.status(200).send("Ok")
 })
-app.use("/",require("./Routes/index"))
+app.get("/user/profile",usersController.getprofile)
+app.post("/user/login",usersController.login)
+app.post("/user/register",usersController.register)
+app.post("/seller/login",usersController.login)
+app.post("/seller/register",usersController.register)
+
 
 
 

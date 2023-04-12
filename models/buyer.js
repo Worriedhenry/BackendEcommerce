@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
 
-const buyer_register_Schema=new mongoose.Schema({
+const buyer_Schema=new mongoose.Schema({
     phone_no:{
         type:String,
         required:true,
@@ -27,5 +27,5 @@ const buyer_register_Schema=new mongoose.Schema({
         required:true,
     }
 })
-const Buyer=mongoose.model("Buyer",buyer_login_Schema);
-module.exports=BuyerRegister;
+const Buyer=mongoose.model("Buyer",buyer_Schema);
+module.exports=Buyer;

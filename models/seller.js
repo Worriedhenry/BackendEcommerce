@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
 
-const Seller_register_Schema=new mongoose.Schema({
+const Seller_Schema=new mongoose.Schema({
     phone_no:{
         type:String,
         required:true,
@@ -44,5 +44,5 @@ const Seller_register_Schema=new mongoose.Schema({
         }
     ]
 })
-const Seller=mongoose.model("Seller",Seller_login_Schema);
-module.exports=SellerRegister;
+const Seller=mongoose.model("Seller",Seller_Schema);
+module.exports=Seller;
