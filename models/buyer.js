@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 
 const buyer_Schema=new mongoose.Schema({
-    phone_no:{
+    Phone:{
         type:String,
         required:true,
         unique:true

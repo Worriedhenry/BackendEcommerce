@@ -8,9 +8,8 @@ module.exports.get =function(req,res){
     res.send("working")
 }
 module.exports.register=async function(req,res){
-    return res.send("ok")
     try{
-    let user=await Buyer.findOne({phone_no:req.body.phone_no})
+    let user=await Buyer.findOne({Phone:req.body.Phone})
 
         if( !user){
             try{

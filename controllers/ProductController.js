@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var item = require('../models/Product');
-var request = require('request-promise');
 const {v4 : uuidv4} = require('uuid')
 const { parse } = require('path');
 
