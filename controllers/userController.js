@@ -1,38 +1,36 @@
 const Buyer=require("../models/buyer")
 
 module.exports.home=function(req,res){
-    
+    res.render("home",{title:"home"})    
+
 }
 
-module.exports.register=function(req,res){
-    Buyer.findOne({phone_no:req.body.phone_no},function(error,user){
-        if(error){
-            console.log("Oops ! error in registering 1");
-            return ;
-        }
+module.exports.register=async function(req,res){
+    try{
+    let user=await Buyer.findOne({phone_no:req.body.phone_no})
+
         if( !user){
-            Buyer.create(req.body,function(error,user){
-                if(error){
-                    console.log("Oops ! error in registering 2");
-                    return ;
-                }
+            try{
+            let user= await Buyer.create(req.body)
                 return res.redirect("/");
 
-            });
+            }catch(err){
+                console.log("error h bro ",err)
+            }
         }
         else{
             return res.send(" This phone no. is already registered");
         }
+    }catch(err){
+        console.log("Erroe in registering" ,err)
+    }
 
-    })
+
 }
 
-module.exports.login=function(req,res){
-    Buyer.findOne({phone_no:req.body.phone_no},function(error,user){
-        if(error){
-            console.log("Oops ! error in SignIn");
-            return ;
-        }
+module.exports.login=async function(req,res){
+    try{
+    let user=await Buyer.findOne({phone_no:req.body.phone_no})
         if(user){
             if(user.password != req.body.password){
                 return res.redirect("/user/profile")
@@ -41,12 +39,15 @@ module.exports.login=function(req,res){
         else{
             return res.redirect("back")
         }
-    })
-
+    }catch(err){
+        console.log("error in login" ,err)
+    }
 }
-module.exports.getprofile = function(req,res){
-    
-    Buyer.findById(req.user.id,function(err,user){
+
+
+module.exports.getprofile = async function(req,res){
+    try{
+    let user=await Buyer.findById(req.user.id)
         if(user){
            return res.status(200).json({
                 success: true,
@@ -56,5 +57,7 @@ module.exports.getprofile = function(req,res){
         else{
             return res.redirect("back")
         }
-    });
+    }catch(err){
+        console.log("error in getting profile" ,err)
+    }
 }
