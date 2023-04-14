@@ -3,6 +3,12 @@ const cors=require("cors")
 const mongoose=require('mongoose')
 const app=express()
 require('dotenv').config()
+mongoose.connect(process.env.MONGODB_URI).then(()=>{
+    console.log("connected to db")
+}).catch(err=>{
+    console.log(err)
+})
+
 
 //MiddleWares for app
 app.use(cors())
@@ -10,8 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
+
 // Api's
-const usersController=require("../controllers/userController")
+const usersController=require("./controllers/userController")
 
 app.get("/",(req,res)=>{
     res.status(200).send("Ok")
