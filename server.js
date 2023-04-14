@@ -20,7 +20,6 @@ app.use(express.json());
 
 // Api's
 const usersController=require("./controllers/userController")
-
 app.get("/",(req,res)=>{
     res.status(200).send("Ok")
 })
@@ -28,9 +27,12 @@ app.get("/home",usersController.home)
 app.get("/user/profile",usersController.getprofile)
 app.post("/user/login",usersController.login)
 app.post("/user/register",usersController.register)
+app.get("/cheak",usersController.get)
 app.post("/seller/login",usersController.login)
 app.post("/seller/register",usersController.register)
 
+var index=require("./controllers/ProductController")
+app.use("/",index)
 
 
 

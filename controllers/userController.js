@@ -4,8 +4,11 @@ module.exports.home=function(req,res){
     res.render("home",{title:"home"})    
 
 }
-
+module.exports.get =function(req,res){
+    res.send("working")
+}
 module.exports.register=async function(req,res){
+    return res.send("ok")
     try{
     let user=await Buyer.findOne({phone_no:req.body.phone_no})
 
