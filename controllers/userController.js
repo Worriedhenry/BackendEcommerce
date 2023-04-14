@@ -7,8 +7,7 @@ module.exports.get =function(req,res){
     res.send("working")
 }
 module.exports.register=function(req,res){
-    return res.send("ok")
-    Buyer.findOne({phone_no:req.body.phone_no},function(error,user){
+    Buyer.findOne({Phone:req.body.Phone},function(error,user){
         if(error){
             console.log("Oops ! error in registering 1");
             return ;
