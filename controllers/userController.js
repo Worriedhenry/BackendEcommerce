@@ -3,8 +3,11 @@ const Buyer=require("../models/buyer")
 module.exports.home=function(req,res){
     
 }
-
+module.exports.get =function(req,res){
+    res.send("working")
+}
 module.exports.register=function(req,res){
+    return res.send("ok")
     Buyer.findOne({phone_no:req.body.phone_no},function(error,user){
         if(error){
             console.log("Oops ! error in registering 1");
