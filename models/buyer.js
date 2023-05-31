@@ -3,7 +3,6 @@ const mongoose=require("mongoose")
 const buyer_Schema=new mongoose.Schema({
     Phone:{
         type:String,
-        required:true,
         unique:true
     },
     first_name:{
@@ -15,16 +14,13 @@ const buyer_Schema=new mongoose.Schema({
     },
     gender:{
         type:String,
-        required:true
     },
     email:{
         type:String,
-        required:true,
         unique:true
     },
     password:{
         type:String,
-        required:true,
     }
 })
 const Buyer=mongoose.model("Buyer",buyer_Schema);

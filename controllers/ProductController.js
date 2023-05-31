@@ -5,7 +5,6 @@ const {v4 : uuidv4} = require('uuid')
 const { parse } = require('path');
 
 router.post('/product/new', async function (req, res, next) {
-	return res.send("ok")
     if(!req.body.seller_id || !req.body.name || !req.body.catagory || !req.body.price || req.body.specifications || req.body.specifications.size()<5 || !req.body.quantity) 
     {
         return res.send("insufficient information.");
@@ -27,6 +26,7 @@ router.post('/product/new', async function (req, res, next) {
             rating          : 0,
             specifications  : req.body.specifications,
             reviews         : []
+
         });
 
         nitem.save(async (err, data)=> {

@@ -2,13 +2,15 @@ const express=require("express")
 const cors=require("cors")
 const mongoose=require('mongoose')
 const app=express()
+const upload = require("./controllers/multer")
 require('dotenv').config()
+const path=require("path")
+const cloudinary=require("./controllers/cloudinary")
 mongoose.connect(process.env.MONGODB_URI).then(()=>{
     console.log("connected to db")
 }).catch(err=>{
     console.log(err)
 })
-
 app.set("view engine","ejs")
 app.set('views', './views')
 //MiddleWares for app
@@ -33,7 +35,8 @@ app.post("/seller/register",usersController.register)
 
 var index=require("./controllers/ProductController")
 app.use("/",index)
-
+var Catlog=require("./controllers/Catlog")
+app.use("/",Catlog)
 
 
 

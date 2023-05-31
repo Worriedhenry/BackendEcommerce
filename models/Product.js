@@ -3,54 +3,69 @@ var mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
 
-    seller_id: {
+    sellerId: {
         type: String,
         required: true,
         ref:"Seller"
     },
-    pdt_id: String,
+    productId: String,
     catagory: {
         type:String,
         required:true    
     },
-    Title:{
+    ProductTitle:{
         type:String,
         required:true    
     },
-    MRP:{
+    ProductMRP:{
         type:Number,
         required:true    
     },
-    disc_prize: Number,
-    numrate: Number,
-    quantity: Number,
+    ProductSellingPrice:{
+        type:Number,
+        required:true
+    },
+    ProductNumericalRating: {
+        type:Number,
+        default:-1,
+    },
+    quantity:{
+    type:Number,
+    default:-1
+    },
     created: {
         type:Date,
         default: Date.now
     },
-    modified:{type:Date,
-    default: Date.now},
+    modified:
+    {type:Date,
+    default: Date.now
+    },
     rating: Number,
-    specifications: [{
-        heading: String,
-        discription: String
-    }],
-    url: [{
-        Image1: {
-            type: String,
-            required: true
-        },
-        Image2: String
-    }],
+    specifications: {
+        type:Array
+    },
+    ProductImages: {
+        type:Array,
+        default:Array(5).fill(null)
+    },
     reviews: [{
         username: String,
         Head: String,
         data: String,
         rating: Number,
-        created: String
-    }]
+        created: String,
+    }],
+    Listed:{
+        type:Boolean,
+        default:false
+    },
+    UnitSold:{
+        type:Number,
+        default:0
+    }
 
-}, { collection: 'fpl' });
+});
 
 Products = mongoose.model('Products', itemSchema);
 

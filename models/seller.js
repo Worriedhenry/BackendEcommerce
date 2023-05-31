@@ -42,7 +42,11 @@ const Seller_Schema=new mongoose.Schema({
             type:String,
             required:true
         }
-    ]
+    ],
+    products:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Products"
+    }]
 })
 const Seller=mongoose.model("Seller",Seller_Schema);
 module.exports=Seller;

@@ -35,7 +35,7 @@ module.exports.login=async function(req,res){
     let user=await Buyer.findOne({phone_no:req.body.phone_no})
         if(user){
             if(user.password != req.body.password){
-                return res.redirect("/user/profile")
+                return res.send(user)
             }
         }
         else{
