@@ -5,6 +5,7 @@ const app=express()
 const upload = require("./controllers/multer")
 require('dotenv').config()
 const path=require("path")
+const Product=require("./models/Product")
 const cloudinary=require("./controllers/cloudinary")
 mongoose.connect(process.env.MONGODB_URI).then(()=>{
     console.log("connected to db")
@@ -37,6 +38,10 @@ var index=require("./controllers/ProductController")
 app.use("/",index)
 var Catlog=require("./controllers/Catlog")
 app.use("/",Catlog)
+var Cart=require("./controllers/Cart")
+app.use("/",Cart)
+var Search=require("./controllers/Search")
+app.use("/",Search)
 
 
 

@@ -8,14 +8,23 @@ const itemSchema = new mongoose.Schema({
         required: true,
         ref:"Seller"
     },
-    productId: String,
+    productId: {
+        type:String,
+        index:true    
+    },
     catagory: {
         type:String,
-        required:true    
+        required:true,
+        index:true
     },
     ProductTitle:{
         type:String,
-        required:true    
+        required:true,
+        index:true,
+    },
+    ProductDescription:{
+        type:String,
+        index:true
     },
     ProductMRP:{
         type:Number,
@@ -29,7 +38,7 @@ const itemSchema = new mongoose.Schema({
         type:Number,
         default:-1,
     },
-    quantity:{
+    Quantity:{
     type:Number,
     default:-1
     },
@@ -66,7 +75,6 @@ const itemSchema = new mongoose.Schema({
     }
 
 });
-
 Products = mongoose.model('Products', itemSchema);
 
 module.exports = Products;

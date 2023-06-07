@@ -16,6 +16,7 @@ app.post('/AddProductToCatlog',async (req,res)=>{
         catagory:"Electronics",
         ProductTitle:req.body.ProductTitle,
         ProductMRP:req.body.ProductMRP,
+        ProductDescription:req.body.ProductDescription,
         ProductSellingPrice:req.body.ProductSellingPrice,
         ProductNumericalRating:3,
         ProductQuantity:req.body.ProductQuantity,
@@ -26,9 +27,10 @@ app.post('/AddProductToCatlog',async (req,res)=>{
 
     })
         NewProduct.save()
+        console.log("success")
         return res.send("ProductAdded")
     } catch(e){
-        console.log(e,ImagePublicUrl[0],ImagePublicUrl[0].url);
+        console.log(e);
     }
     return res.status(200).send("ok")
 })
@@ -59,7 +61,6 @@ app.delete("/deleteProduct/:ProductId",async (req,res)=>{
 })
 app.post("/deleteimage",async (req,res)=>{
     try{
-        console.log(req.body.public_id,req.body)
         const result = await cloudinary.uploader.destroy(req.body.public_id);
         res.send({operationCode:200})
     } catch(e){

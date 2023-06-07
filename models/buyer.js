@@ -5,23 +5,26 @@ const buyer_Schema=new mongoose.Schema({
         type:String,
         unique:true
     },
-    first_name:{
+    FirstName:{
         type:String,
         required:true
     },
-    last_name:{
+    LastName:{
         type:String,
     },
-    gender:{
+    Gender:{
         type:String,
     },
-    email:{
-        type:String,
-        unique:true
+    Email:{
+        type:String
     },
-    password:{
+    Password:{
         type:String,
+    },
+    Cart:{
+        type:Array,
+        default:[]
     }
 })
-const Buyer=mongoose.model("Buyer",buyer_Schema);
+const Buyer=mongoose.model("users",buyer_Schema);
 module.exports=Buyer;
