@@ -1,10 +1,10 @@
 var express = require('express');
-var router = express.Router();
+var app = express();
 var item = require('../models/Product');
 const { v4: uuidv4 } = require('uuid')
 const { parse } = require('path');
-
-router.post('/product/new', async function (req, res, next) {
+const ReviewSchema=require("../models/reviews")
+app.post('/product/new', async function (req, res, next) {
     if (!req.body.seller_id || !req.body.name || !req.body.catagory || !req.body.price || req.body.specifications || req.body.specifications.size() < 5 || !req.body.quantity) {
         return res.send("insufficient information.");
     }
@@ -40,7 +40,7 @@ router.post('/product/new', async function (req, res, next) {
     }
 });
 
-router.post('/product/update', async function (req, res, next) {
+app.post('/product/update', async function (req, res, next) {
 
     item.findOne({ pdt_id: req.body.pdt_id }, async function (err, data) {
         if (data) {
@@ -65,40 +65,8 @@ router.post('/product/update', async function (req, res, next) {
     });
 });
 
-router.post('/product/rating', async function (req, res, next) {
 
-    item.findOne({ pdt_id: req.body.pdt_id }, async function (err, data) {
-        if (data) {
-            var rev = data.reviews;
-            var rate = (data.rating * data.numrate + req.body.rating) / (data.numrate + 1);
-            var nrev = {
-                username: req.body.username,
-                head: req.body.head,
-                data: req.body.data,
-                rating: req.body.rating,
-                created: new Date().toLocaleDateString()
-            }
-
-            rev.push(nrev);
-
-            await item.updateOne(
-                { "pdt_id": req.body.pdt_id },
-                {
-                    $set: {
-                        rating: rate,
-                        numrate: data.numrate + 1,
-                        reviews: rev
-                    }
-                }
-            );
-        }
-        else {
-            return res.send("item not found");
-        }
-    });
-});
-
-router.get('/getproduct/:productId', async function (req, res, next) {
+app.get('/getproduct/:productId', async function (req, res, next) {
     try {
         let data = await item.findOne({ _id: req.params.productId })
         if (data) {
@@ -114,4 +82,19 @@ router.get('/getproduct/:productId', async function (req, res, next) {
     }
 });
 
-module.exports = router;
+
+app.post("/review/:ProductId",async (req,res)=>{
+    try{
+    const {Rating,ReviewDescription,ReviewTitle}=req.body
+    const Review=new ReviewSchema({
+        Rating,ReviewDescription,ReviewTitle,
+        ProductId:req.params.ProductId
+    })
+    Review.save()
+    res.status(200).send("Review Added Successfully")
+    } catch(e){
+        console.log(e)
+        res.send(e)
+    }
+})
+module.exports = app;

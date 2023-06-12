@@ -1,5 +1,5 @@
 const Buyer=require("../models/buyer")
-
+const jwt = require('jsonwebtoken');
 module.exports.home=function(req,res){
     res.render("home",{title:"home"})    
 
@@ -13,8 +13,10 @@ module.exports.register=async function(req,res){
 
         if( !user){
             try{
+            console.log(req.body)
             let user= await Buyer.create(req.body)
-                return res.redirect("/");
+            console.log("Success")
+            return res.status(200).send("New user Registered");
 
             }catch(err){
                 console.log("error h bro ",err)
@@ -24,7 +26,7 @@ module.exports.register=async function(req,res){
             return res.send(" This phone no. is already registered");
         }
     }catch(err){
-        console.log("Erroe in registering" ,err)
+        console.log("Error in registering" ,err)
     }
 
 
@@ -32,9 +34,9 @@ module.exports.register=async function(req,res){
 
 module.exports.login=async function(req,res){
     try{
-    let user=await Buyer.findOne({phone_no:req.body.phone_no})
+    let user=await Buyer.findOne({Phone:req.body.Phone})
         if(user){
-            if(user.password != req.body.password){
+            if(user.Password != req.body.Password){
                 return res.send(user)
             }
         }

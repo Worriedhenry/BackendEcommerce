@@ -7,21 +7,29 @@ const buyer_Schema=new mongoose.Schema({
     },
     FirstName:{
         type:String,
-        required:true
+        default:""
     },
     LastName:{
         type:String,
+        default:""
     },
     Gender:{
         type:String,
+        default:""
     },
     Email:{
-        type:String
+        type:String,
+        default:""
     },
     Password:{
         type:String,
+        required:[true,"Password is Required"]
     },
     Cart:{
+        type:Array,
+        default:[]
+    },
+    Orders:{
         type:Array,
         default:[]
     }
