@@ -7,6 +7,7 @@ require('dotenv').config()
 const path=require("path")
 const Product=require("./models/Product")
 const cloudinary=require("./controllers/cloudinary")
+const auth=require("./middleware/auth")
 mongoose.connect(process.env.MONGODB_URI).then(()=>{
     console.log("connected to db")
 }).catch(err=>{
