@@ -6,7 +6,7 @@ const itemSchema = new mongoose.Schema({
     sellerId: {
         type: String,
         required: true,
-        ref:"Seller"
+        ref:"Sellers"
     },
     productId: {
         type:String,

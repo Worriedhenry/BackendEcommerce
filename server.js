@@ -28,8 +28,8 @@ app.get("/",(req,res)=>{
 })
 app.get("/home",usersController.home)
 app.get("/user/profile",usersController.getprofile)
-app.post("/user/login",usersController.login)
-app.post("/user/register",usersController.register)
+app.post("/login",usersController.login)
+app.post("/register",usersController.register)
 app.get("/cheak",usersController.get)
 app.post("/seller/login",usersController.login)
 app.post("/seller/register",usersController.register)
@@ -42,9 +42,12 @@ var Cart=require("./controllers/Cart")
 app.use("/",Cart)
 var Search=require("./controllers/Search")
 app.use("/",Search)
-
-
-
+var Order=require("./controllers/Order")
+app.use("/",Order)
+var Profile=require("./controllers/Profile")
+app.use("/",Profile)
+var Seller=require("./controllers/seller")
+app.use("/",Seller)
 //Server Port assigning and executing
 app.listen(process.env.PORT||3001,()=>{
     console.log("Server is running at port 3001 ")

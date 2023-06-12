@@ -19,9 +19,9 @@ app.post("/admin/register",async (req,res)=>{
     }
 })
 
-app.get("/admin/info/:SellerId",async (req,res)=>{
+app.get("/admin/info",async (req,res)=>{
     try {
-        let Result=await Seller.findById(req.params.SellerId)
+        let Result=await Seller.find()
         res.status(200).send(Result)
     } catch (error) {
         console.log(error)
@@ -48,3 +48,4 @@ app.post("/admin/login",async (req, res) => {
     }
 
 });
+module.exports=Seller

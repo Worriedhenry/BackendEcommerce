@@ -2,7 +2,7 @@ const mongoose=require("mongoose")
 
 const Seller_Schema=new mongoose.Schema({
     PhoneNumber:{
-        type:String,
+        type:Number,
         required:true,
         unique:true
     },
@@ -43,5 +43,5 @@ const Seller_Schema=new mongoose.Schema({
         default:[]
     }]
 })
-const Seller=mongoose.model("Seller",Seller_Schema);
+const Seller=mongoose.model("Sellers",Seller_Schema);
 module.exports=Seller;
