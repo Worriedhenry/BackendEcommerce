@@ -1,51 +1,46 @@
 const mongoose=require("mongoose")
 
 const Seller_Schema=new mongoose.Schema({
-    phone_no:{
+    PhoneNumber:{
         type:String,
         required:true,
         unique:true
     },
-    first_name:{
+    FirstName:{
         type:String,
         required:true
     },
-    last_name:{
+    LastName:{
         type:String,
     },
-    email:{
+    Email:{
         type:String,
         required:true,
         unique:true
     },
-    password:{
+    Password:{
         type:String,
         required:true,
     },
-    shop_name:{
+    StoreName:{
         type:String,
         required:true
     },
-    gst_no:{
+    GSTIN:{
         type:String,
         required:true,
         unique:true
     },
-    location:[
+    StoreLocation:[
         {
             type:String,
             required:true
         }
     ],
-    products_cat:[
-        {
-            type:String,
-            required:true
-        }
-    ],
-    products:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Products"
+    ProductsCatlog:[{
+        type:Array,
+        ref:"Products",
+        default:[]
     }]
 })
 const Seller=mongoose.model("Seller",Seller_Schema);
