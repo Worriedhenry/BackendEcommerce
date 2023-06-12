@@ -7,6 +7,7 @@ require('dotenv').config()
 const path=require("path")
 const Product=require("./models/Product")
 const cloudinary=require("./controllers/cloudinary")
+const auth=require("./middleware/auth")
 mongoose.connect(process.env.MONGODB_URI).then(()=>{
     console.log("connected to db")
 }).catch(err=>{
@@ -27,7 +28,7 @@ app.get("/",(req,res)=>{
     res.status(200).send("Ok")
 })
 app.get("/home",usersController.home)
-app.get("/user/profile",usersController.getprofile)
+app.get("/user/profile",auth,usersController.getprofile)
 app.post("/user/login",usersController.login)
 app.post("/user/register",usersController.register)
 app.get("/cheak",usersController.get)
