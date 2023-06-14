@@ -34,5 +34,5 @@ const buyer_Schema=new mongoose.Schema({
         default:[]
     }
 })
-const Buyer=mongoose.model("Buyer",buyer_Schema);
+const Buyer=mongoose.model("users",buyer_Schema);
 module.exports=Buyer;

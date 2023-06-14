@@ -2,28 +2,26 @@ const mongoose=require("mongoose")
 
 const ProductReview=new  mongoose.Schema({
     ProductId:{
-        type:mongoose.Types.ObjectId,
-        required:[true,"Require Product Id"],
+        type:String,
+        // required:[true,"Require Product Id"],
         ref:"products"
     },
     CustomerId:{
         type:String,
         default:"Ankit Sharma"
     },
-    ReviewDescription:{
+    Description:{
         type :String,
     },
-    ReviewTitle:{
+    Title:{
         type:String,
     },
     Rating:{
         type:mongoose.Types.Decimal128,
-        required:true
+        // required:true
     },
-    ReviewDateAndTime:{
-        type:Date,
-        default:Date.now()
-    }
+},{
+    timestamps:true
 })
 
 const ProductReviewModel=mongoose.model("reviews",ProductReview)

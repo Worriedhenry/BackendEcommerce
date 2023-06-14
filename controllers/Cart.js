@@ -6,21 +6,22 @@ require('dotenv').config()
 var User = require("../models/buyer")
 var Product = require("../models/Product")
 
-app.get("/getcart", async (req, res) => {
+app.get("/getcart/:UserId", async (req, res) => {
   try {
-    let productIds = await User.findOne({ Phone: "12321" });
+    let productIds = await User.findOne({_id:req.params.UserId});
     productIds = productIds.Cart
     let result = await Product.find({ _id: { $in: productIds } });
+    console.log(productIds,result)
     res.send(result)
   } catch (e) {
     console.log(e)
     res.send(e)
   }
 })
-app.put("/RemoveProductFromCart/:productId", async (req, res) => {
+app.put("/RemoveProductFromCart/:UserId/:productId", async (req, res) => {
   try {
 
-    let UserToUpdate = await User.findOne({ Phone: "12321" })
+    let UserToUpdate = await User.findOne({ _id:req.params.UserId })
     const UpdatedArray = UserToUpdate.Cart
 
     const IndexOfItem = UpdatedArray.indexOf(req.params.productId)
