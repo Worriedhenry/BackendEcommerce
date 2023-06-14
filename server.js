@@ -57,6 +57,8 @@ var Profile=require("./controllers/Profile")
 app.use("/",Profile)
 var Seller=require("./controllers/seller")
 app.use("/",Seller)
+var Review =require("./controllers/reviews")
+app.use("/",Review)
 //Server Port assigning and executing
 app.listen(process.env.PORT||3001,()=>{
     console.log("Server is running at port 3001 ")

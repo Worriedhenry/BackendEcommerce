@@ -5,9 +5,6 @@ var Product = require("../models/Product")
 
 
 
-
-
-
 app.get('/search', async (req, res) => {
     const { query } = req.query;
     try {

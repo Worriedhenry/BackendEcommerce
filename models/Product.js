@@ -58,13 +58,9 @@ const itemSchema = new mongoose.Schema({
         type:Array,
         default:Array(5).fill(null)
     },
-    reviews: [{
-        username: String,
-        Head: String,
-        data: String,
-        rating: Number,
-        created: String,
-    }],
+    reviews:{
+        type:Array
+    },
     Listed:{
         type:Boolean,
         default:false
@@ -75,6 +71,6 @@ const itemSchema = new mongoose.Schema({
     }
 
 });
-Products = mongoose.model('Products', itemSchema);
+const Products = mongoose.model('Products', itemSchema);
 
 module.exports = Products;

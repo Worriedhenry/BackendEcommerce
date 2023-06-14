@@ -5,7 +5,8 @@ var User=require("../models/buyer")
 
 app.get("/account/getuserInfo/:UserId",async (req,res)=>{
     try{
-        let result=await User.findById(req.params.UserId)
+        let result=await User.findById("6481efb232b997a8f8af8f67")
+        console.log(result)
         if (result) {
             res.send(result)
         } else {

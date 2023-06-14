@@ -3,9 +3,10 @@ var app = express.Router();
 const upload = require("./multer")
 const mongoose=require("mongoose")
 require('dotenv').config()
-const path=require("path")
 const ProductSchema=require("../models/Product")
 const cloudinary=require("./cloudinary")
+const Seller=
+
 app.post('/AddProductToCatlog',async (req,res)=>{
     const ImagePublicUrl=req.body.ImagePublicID
     try{
@@ -34,9 +35,8 @@ app.post('/AddProductToCatlog',async (req,res)=>{
     }
     return res.status(200).send("ok")
 })
-app.post("/ProvideCatlog",async (req,res)=>{
+app.post("/ProvideCatlog/:SellerId",async (req,res)=>{
     let Products=await ProductSchema.find({sellerId:"123456"})
-    console.log(Products)
     res.status(200).send({CatlogProducts:Products})
 })
 //Cloudinary Upload

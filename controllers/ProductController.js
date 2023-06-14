@@ -82,19 +82,4 @@ app.get('/getproduct/:productId', async function (req, res, next) {
     }
 });
 
-
-app.post("/review/:ProductId",async (req,res)=>{
-    try{
-    const {Rating,ReviewDescription,ReviewTitle}=req.body
-    const Review=new ReviewSchema({
-        Rating,ReviewDescription,ReviewTitle,
-        ProductId:req.params.ProductId
-    })
-    Review.save()
-    res.status(200).send("Review Added Successfully")
-    } catch(e){
-        console.log(e)
-        res.send(e)
-    }
-})
 module.exports = app;
