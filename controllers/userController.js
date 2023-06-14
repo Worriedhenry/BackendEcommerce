@@ -62,6 +62,8 @@ module.exports.login=async function(req,res){
             .then((ismatched)=>{
                 if(ismatched){
                     const token=jwt.sign({_id:user._id},process.env.JWT_KEY);
+                    console.log(token)
+                    res.cookie("jwt",token)
                     res.json(token)
                 }
                 else{
