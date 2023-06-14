@@ -4,7 +4,6 @@ const Seller = require('../models/seller');
 const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
 const CookieParser=require("cookie-parser")
-module.exports.Register= async (req,res)=>{
 
 
 app.get("/admin/info/:SellerId",async (req,res)=>{
@@ -20,7 +19,7 @@ app.get("/admin/info/:SellerId",async (req,res)=>{
     }
 })
 
-app.put("/admin/register",async (req,res)=>{
+app.post("/admin/register",async (req,res)=>{
     try{
     
     const {PhoneNumber,FirstName,LastName,Email,GSTIN,Password,StoreName,StoreLocation}=req.body;
@@ -50,7 +49,7 @@ app.put("/admin/register",async (req,res)=>{
         res.status(500)
     }
     
-},
+})
 
 app.get("/admin/info", async (req,res)=>{
     try {
@@ -63,7 +62,7 @@ app.get("/admin/info", async (req,res)=>{
         res.status(500)
     }
 
-},
+})
 module.exports.Login=async (req, res) => {
     try {
         const {PhoneNumber,Password}=req.body
@@ -90,9 +89,9 @@ module.exports.Login=async (req, res) => {
         console.log(error)
     }
 
-});
+}
 
-app.put("/admin/updateSellerEmail/:SellerId",async (req,res)=>{
+app.post("/admin/updateSellerEmail/:SellerId",async (req,res)=>{
     try {
         const {Email}=req.body
         let result=await Seller.updateOne({_id:req.params.SellerId},{$set:{Email}})
@@ -149,5 +148,4 @@ app.put("/admin/updateStoreLocation/:SellerId",async (req,res)=>{
     }
 })
 
-
-module.exports=app
+module.exports=app 
