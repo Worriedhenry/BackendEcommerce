@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 require('dotenv').config()
 var User=require("../models/buyer")
-
+const jwt=require("jsonwebtoken")
 app.get("/account/getuserInfo/:UserId",async (req,res)=>{
     try{
-        let result=await User.findById("6481efb232b997a8f8af8f67")
+        let result=await User.findById(req.params.UserId)
         console.log(result)
         if (result) {
             res.send(result)
@@ -15,6 +15,22 @@ app.get("/account/getuserInfo/:UserId",async (req,res)=>{
     }catch(err){
         console.log(err)
     }
+})
+
+app.post("/jwt",async (req,res)=>{
+    const token= req.body.token;
+    console.log(req.body)
+
+    jwt.verify(token ,process.env.JWT_KEY, async (err,payload)=>{
+        if(err){
+            console.log(err)
+            return res.status(204).send("--")
+        }
+        const {_id}=payload;
+        
+        return res.status(200).send({id:_id});
+
+    })
 })
 
 app.put('/account/updateName/:UserId', async(req, res) => {

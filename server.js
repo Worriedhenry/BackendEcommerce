@@ -2,12 +2,9 @@ const express=require("express")
 const cors=require("cors")
 const mongoose=require('mongoose')
 const app=express()
-const upload = require("./controllers/multer")
 require('dotenv').config()
 const path=require("path")
 const CookieParser=require("cookie-parser")
-const Product=require("./models/Product")
-const cloudinary=require("./controllers/cloudinary")
 const auth=require("./middleware/auth")
 const auth1=require("./middleware/AuthForSeller")
 mongoose.connect(process.env.MONGODB_URI).then(()=>{
@@ -15,8 +12,6 @@ mongoose.connect(process.env.MONGODB_URI).then(()=>{
 }).catch(err=>{
     console.log(err)
 })
-app.set("view engine","ejs")
-app.set('views', './views')
 //MiddleWares for app
 app.use(cors())
 app.use(CookieParser())
@@ -29,18 +24,12 @@ app.use(express.json());
 const tokentoUser=require("./middleware/TokenToUser")
 const usersController=require("./controllers/userController")
 const adminController=require("./controllers/seller")
-app.get("/",(req,res)=>{
-    res.status(200).send("Ok")
-})
 app.get("/home",usersController.home)
 app.get("/user/profile",auth,usersController.getprofile)
 app.post("/login",usersController.login)
 app.post("/register",usersController.register)
 app.get("/cheak",usersController.get)
-// app.post("/admin/register",adminController.Register)
-// app.post("/admin/login",adminController.Login)
-// app.get("/admin/info", auth1 ,adminController.Info)
-app.get("/getdata",tokentoUser)
+app.get("/Auth",tokentoUser)
 
 
 var index=require("./controllers/ProductController")

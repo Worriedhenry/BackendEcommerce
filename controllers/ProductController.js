@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var item = require('../models/Product');
 const { v4: uuidv4 } = require('uuid')
+const User =require("../models/buyer")
 const { parse } = require('path');
 const ReviewSchema=require("../models/reviews")
 app.post('/product/new', async function (req, res, next) {
@@ -66,12 +67,22 @@ app.post('/product/update', async function (req, res, next) {
 });
 
 
-app.get('/getproduct/:productId', async function (req, res, next) {
+app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
     try {
         let data = await item.findOne({ _id: req.params.productId })
-        if (data) {
-            console.log(data)
-            return res.send( data);
+        if(req.params.UserId=="false"){
+            return res.json({data,InCart:false})
+        }
+        if (data && req.params.UserId) {
+            console.log("ok");
+            const user=await User.findById(req.params.UserId)
+            console.log(user.Cart.includes(req.params.productId))
+            if (user.Cart.includes(req.params.productId)){
+
+                return res.json({data,InCart:true})
+            }
+
+            return res.json({data,InCart:false})
         }
         else {
             return res.send("item not found");

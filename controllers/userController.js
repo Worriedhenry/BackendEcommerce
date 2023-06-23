@@ -15,10 +15,10 @@ module.exports.register=async function(req,res){
         let user=await Buyer.findOne({Phone:req.body.Phone})
         if( !user){
             try{
-            console.log(req.body)
-            let user= await Buyer.create(req.body)
-            console.log("Success")
-            return res.status(200).send("New user Registered");
+            // console.log(req.body)
+            // let user= await Buyer.create(req.body)
+            // console.log("Success")
+            // return res.status(200).send("New user Registered");
 
             bcrypt.hash(Password,12)
             .then((hashedpassword)=>{
@@ -62,12 +62,11 @@ module.exports.login=async function(req,res){
             .then((ismatched)=>{
                 if(ismatched){
                     const token=jwt.sign({_id:user._id},process.env.JWT_KEY);
-                    console.log(token)
                     res.cookie("jwt",token)
-                    res.json(token)
+                    res.status(200).send({id:user._id,token})
                 }
                 else{
-                    return res.status(404).json({message:"Phone or Password is incorrect"})
+                    return res.status(302).json({message:"Phone or Password is incorrect"})
                 }
             })
         }

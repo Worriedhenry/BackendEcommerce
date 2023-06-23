@@ -11,7 +11,6 @@ app.get("/getcart/:UserId", async (req, res) => {
     let productIds = await User.findOne({_id:req.params.UserId});
     productIds = productIds.Cart
     let result = await Product.find({ _id: { $in: productIds } });
-    console.log(productIds,result)
     res.send(result)
   } catch (e) {
     console.log(e)
@@ -27,7 +26,7 @@ app.put("/RemoveProductFromCart/:UserId/:productId", async (req, res) => {
     const IndexOfItem = UpdatedArray.indexOf(req.params.productId)
     UpdatedArray.splice(IndexOfItem, 1)
 
-    let UserUpdateResponse = await User.updateOne({ Phone: "12321" }, { $set: { Cart: UpdatedArray } })
+    let UserUpdateResponse = await User.updateOne({ _id:req.params.UserId }, { $set: { Cart: UpdatedArray } })
 
     let UpdatedCart = await Product.find({ _id: { $in: UpdatedArray } });
     res.send(UpdatedCart)
@@ -36,9 +35,9 @@ app.put("/RemoveProductFromCart/:UserId/:productId", async (req, res) => {
     console.log(e)
   }
 })
-app.put("/AddProductToCart/:productId", async (req, res) => {
+app.put("/AddProductToCart/:productId/:UserId", async (req, res) => {
   try {
-    let UserToUpdate = await User.updateOne({ Phone: "12321" }, { $push: { Cart: req.params.productId } })
+    let UserToUpdate = await User.updateOne({_id: req.params.UserId }, { $push: { Cart: req.params.productId } })
     res.send(UserToUpdate)
   } catch (e) {
     console.log(e)
