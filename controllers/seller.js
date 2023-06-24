@@ -4,7 +4,7 @@ const Seller = require('../models/seller');
 const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
 const CookieParser=require("cookie-parser")
-
+const auth=require("../middleware/AuthForSeller")
 
 app.get("/admin/info/:SellerId",async (req,res)=>{
     try{
@@ -51,7 +51,7 @@ app.post("/admin/register",async (req,res)=>{
     
 })
 
-app.get("/admin/info", async (req,res)=>{
+app.get("/admin/info", auth,async (req,res)=>{
     try {
         console.log(` Cookie is ${req.cookies.jwt} `);
 

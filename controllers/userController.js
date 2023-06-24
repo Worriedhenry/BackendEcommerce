@@ -16,9 +16,6 @@ module.exports.register=async function(req,res){
         if( !user){
             try{
             console.log(req.body)
-            let user= await Buyer.create(req.body)
-            console.log("Success")
-            return res.status(200).send("New user Registered");
 
             bcrypt.hash(Password,12)
             .then((hashedpassword)=>{
