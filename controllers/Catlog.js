@@ -43,6 +43,7 @@ app.post("/ProvideCatlog/:SellerId",async (req,res)=>{
 app.post("/upload",upload.single('file'),async (req,res)=>{
     try{
         const result=await cloudinary.uploader.upload(req.file.path)
+        console.log(process.env.API_SECRET)
         res.send({result:result})
     } catch(e){
         console.log(e)

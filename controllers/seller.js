@@ -28,7 +28,7 @@ app.post("/admin/register",async (req,res)=>{
 
             bcrypt.hash(Password,12)
             .then((hashedpassword)=>{
-                const NewSeller=new SellerSchema({
+                const NewSeller=new Seller({
                     PhoneNumber,FirstName,LastName,Email,Password : hashedpassword,GSTIN,StoreLocation,StoreName
                 })
                 NewSeller.save()
