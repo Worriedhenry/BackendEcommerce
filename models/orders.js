@@ -51,7 +51,7 @@ const OrdersSchema=new  mongoose.Schema({
         type:String,
         required:[true,'Name needeed']
     }
-})
+},{timestamps:true})
 
 const OrdersSchemaModel=mongoose.model("Orders",OrdersSchema)
 module.exports = OrdersSchemaModel
