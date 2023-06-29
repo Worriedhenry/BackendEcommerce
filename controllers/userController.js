@@ -59,12 +59,11 @@ module.exports.login=async function(req,res){
             .then((ismatched)=>{
                 if(ismatched){
                     const token=jwt.sign({_id:user._id},process.env.JWT_KEY);
-                    console.log(token)
                     res.cookie("jwt",token)
-                    res.json(token)
+                    res.status(200).send({id:user._id,token})
                 }
                 else{
-                    return res.status(404).json({message:"Phone or Password is incorrect"})
+                    return res.status(302).json({message:"Phone or Password is incorrect"})
                 }
             })
         }
