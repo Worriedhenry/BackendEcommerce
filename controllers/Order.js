@@ -11,7 +11,6 @@ app.get("/orders/get/:UserId", async (req, res) => {
         let OrdersIds = await UserSchema.findOne({_id:req.params.UserId});
         OrdersIds = OrdersIds.Orders
         let result = await OrdersSchema.find({ _id: { $in: OrdersIds } });
-        console.log(result[0].createdAt)
         res.send(result)
       } catch (e) {
         console.log(e)
