@@ -17,21 +17,7 @@ app.get("/account/getuserInfo/:UserId",async (req,res)=>{
     }
 })
 
-app.post("/jwt",async (req,res)=>{
-    const token= req.body.token;
-    console.log(req.body)
 
-    jwt.verify(token ,process.env.JWT_KEY, async (err,payload)=>{
-        if(err){
-            console.log(err)
-            return res.status(204).send("--")
-        }
-        const {_id}=payload;
-        
-        return res.status(200).send({id:_id});
-
-    })
-})
 
 app.put('/account/updateName/:UserId', async(req, res) => {
     try{

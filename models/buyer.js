@@ -7,19 +7,19 @@ const buyer_Schema=new mongoose.Schema({
     },
     FirstName:{
         type:String,
-        default:""
+        default:"untited"
     },
     LastName:{
         type:String,
-        default:""
+        default:"untitled"
     },
     Gender:{
         type:String,
-        default:""
+        default:"untitled"
     },
     Email:{
         type:String,
-        default:""
+        default:"untitled"
     },
     Password:{
         type:String,
@@ -30,6 +30,10 @@ const buyer_Schema=new mongoose.Schema({
         default:[]
     },
     Orders:{
+        type:Array,
+        default:[]
+    },
+    Reviews:{
         type:Array,
         default:[]
     }

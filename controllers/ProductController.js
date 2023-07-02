@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require('uuid')
 const User =require("../models/buyer")
 const { parse } = require('path');
 const ReviewSchema=require("../models/reviews")
+const SellerSchema=require("../models/seller")
 app.post('/product/new', async function (req, res, next) {
     if (!req.body.seller_id || !req.body.name || !req.body.catagory || !req.body.price || req.body.specifications || req.body.specifications.size() < 5 || !req.body.quantity) {
         return res.send("insufficient information.");
@@ -71,8 +72,9 @@ app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
     console.log(req.params)
     try {
         let data = await item.findOne({ _id: req.params.productId })
+        const seller=await SellerSchema.findById(data.sellerId)
         if(req.params.UserId=="false"){
-            return res.json({data,InCart:false})
+            return res.json({data,InCart:false,Seller:seller.FirstName})
         }
         if (data && req.params.UserId) {
             console.log("ok");
@@ -80,10 +82,10 @@ app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
             console.log(user.Cart.includes(req.params.productId))
             if (user.Cart.includes(req.params.productId)){
 
-                return res.json({data,InCart:true})
+                return res.json({data,InCart:true,Seller:seller.FirstName})
             }
 
-            return res.json({data,InCart:false})
+            return res.json({data,InCart:false,Seller:seller.FirstName})
         }
         else {
             return res.send("item not found");
@@ -101,7 +103,7 @@ app.put("/product/changelisting",async (req,res)=>{
 app.put('/product/updateProduct/:ProductId', async (req, res) => {
     try{
     const {ProductTitle,ProductDescription,ProductMRP, ProductSellingPrice, ProductQuantity, ProductBrandName, specifications}=req.body
-    let response=await item.updateOne({_id:req.params.ProductId},{$set:{ProductTitle,ProductDescription,ProductMRP,ProductBrandName,ProductSellingPrice,ProductQuantity,specifications}})
+    let response=await item.updateOne({_id:req.params.ProductId},{$set:{ProductTitle,ProductDescription,ProductMRP,ProductBrandName,ProductSellingPrice,Quantity:ProductQuantity,specifications}})
 
     res.status(200).send(response)
     }catch(error){

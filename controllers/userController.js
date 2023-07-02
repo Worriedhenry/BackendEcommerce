@@ -51,7 +51,6 @@ module.exports.register=async function(req,res){
 
 module.exports.login=async function(req,res){
     try{
-        console.log(req.body)
     let user=await Buyer.findOne({Phone:req.body.Phone})
         if(user){
             bcrypt.compare(req.body.Password,user.Password)
@@ -62,12 +61,12 @@ module.exports.login=async function(req,res){
                     res.status(200).send({id:user._id,token})
                 }
                 else{
-                    return res.status(302).json({message:"Phone or Password is incorrect"})
+                    return res.status(202).json({message:"Phone or Password is incorrect"})
                 }
             })
         }
         else{
-            return res.status(404).json({error:"please register "})
+            return res.json({error:"please register "})
         }
     }catch(err){
         console.log("error in login" ,err)

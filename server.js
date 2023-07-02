@@ -20,18 +20,6 @@ app.use(express.json());
 
 
 
-// Api's
-const tokentoUser=require("./middleware/TokenToUser")
-const usersController=require("./controllers/userController")
-const adminController=require("./controllers/seller")
-app.get("/home",usersController.home)
-app.get("/user/profile",auth,usersController.getprofile)
-app.post("/login",usersController.login)
-app.post("/register",usersController.register)
-app.get("/cheak",usersController.get)
-app.get("/Auth",tokentoUser)
-
-
 var index=require("./controllers/ProductController")
 app.use("/",index)
 var Catlog=require("./controllers/Catlog")
@@ -48,6 +36,20 @@ var Seller=require("./controllers/seller")
 app.use("/",Seller)
 var Review =require("./controllers/reviews")
 app.use("/",Review)
+var Auth=require("./controllers/Authorisation")
+app.use("/",Auth)
+// Api's
+const tokentoUser=require("./middleware/TokenToUser")
+const usersController=require("./controllers/userController")
+const adminController=require("./controllers/seller")
+app.get("/home",usersController.home)
+app.get("/user/profile",auth,usersController.getprofile)
+app.post("/login",usersController.login)
+app.post("/register",usersController.register)
+app.get("/cheak",usersController.get)
+app.get("/Auth",tokentoUser)
+
+
 //Server Port assigning and executing
 app.listen(process.env.PORT||3001,()=>{
     console.log("Server is running at port 3001 ")

@@ -25,14 +25,15 @@ app.post("/seller/new",async (req,res)=>{
     
     const {PhoneNumber,FirstName,LastName,Email,GSTIN,Password,StoreName,StoreLocation}=req.body;
     let seller=await Seller.findOne({PhoneNumber:req.body.PhoneNumber})
+    console.log(seller)
         if(!seller){
-
             bcrypt.hash(Password,12)
             .then((hashedpassword)=>{
-                const NewSeller=new Seller(req.body)
+                const NewSeller=new Seller({PhoneNumber,FirstName,LastName,Email,GSTIN,Password:hashedpassword,StoreName,StoreLocation})
                 NewSeller.save()
                 .then(newseller=>{
-                    res.status(200).send({id:newseller._id})
+                    const token=jwt.sign({_id:NewSeller._id},process.env.JWT_KEY);
+                    res.status(200).send({id:newseller._id,token})
                 })
                 .catch((err)=>{
                     console.log("Error h bro " , err);
@@ -41,18 +42,18 @@ app.post("/seller/new",async (req,res)=>{
 
         }
         else{
-            return res.json({message:"This is already registered"})
+            return res.status(202).send("Already Registered")
         }
     }catch(e){
         console.log(e)
-        res.status(500)
+        res.status(200).send("An Error Occurred")
     }
     
 })
 app.get("/seller/getproduct/:ProductId",async (req,res)=>{
     try{
     let Product=await ProductSchema.findById(req.params.ProductId)
-    res.status(202).send(Product)
+    res.status(200).send(Product)
     }catch(err){
         console.log(err)
         res.send(err).status(500)
@@ -74,18 +75,20 @@ app.get("/admin/info", async (req,res)=>{
 
 
 
-module.exports.Login=async (req, res) => {
+app.post( "/seller/login",async (req, res) => {
     try {
         const {PhoneNumber,Password}=req.body
+
         let user=await Seller.findOne({PhoneNumber:PhoneNumber})
+        console.log(user,PhoneNumber,"Hi")
         if(user){
-            bcrypt.compare(req.body.Password,user.Password)
+            bcrypt.compare(Password,user.Password)
             .then((ismatched)=>{
                 if(ismatched){
                     const token=jwt.sign({_id:user._id},process.env.JWT_KEY);
                     res.cookie("jwt",token );
                     
-                    return res.json(token)
+                    return res.send({sellerId:user._id,token})
                 }
                 else{
                     return res.status(404).json({message:"Phone or Password is incorrect"})
@@ -93,14 +96,14 @@ module.exports.Login=async (req, res) => {
             })
         }
         else{
-            return res.json({message:"Please register first"})
+            return res.status(400).json({message:"Please register first"})
         }
         
     } catch (error) {
         console.log(error)
     }
 
-}
+})
 
 app.post("/admin/updateSellerEmail/:SellerId",async (req,res)=>{
     try {

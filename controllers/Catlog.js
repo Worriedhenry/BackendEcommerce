@@ -5,30 +5,31 @@ const mongoose=require("mongoose")
 require('dotenv').config()
 const ProductSchema=require("../models/Product")
 const cloudinary=require("./cloudinary")
-const Seller=
+const Seller=require("../models/seller")
 
-app.post('/AddProductToCatlog',async (req,res)=>{
+app.post('/AddProductToCatlog/:SellerId',async (req,res)=>{
     const ImagePublicUrl=req.body.ImagePublicID
+    console.log(req.body.specifications)
     try{
     const NewProduct=new ProductSchema({
         _id: new mongoose.Types.ObjectId,
-        sellerId:"123456",
+        sellerId:req.params.SellerId,
         productId:"10056",
         catagory:"Electronics",
         ProductTitle:req.body.ProductTitle,
         ProductMRP:req.body.ProductMRP,
         ProductDescription:req.body.ProductDescription,
         ProductSellingPrice:req.body.ProductSellingPrice,
-        ProductNumericalRating:3,
-        ProductQuantity:req.body.ProductQuantity,
-        ProductSpecification:req.body.specifications,
+        ProductNumericalRating:0,
+        Quantity:req.body.ProductQuantity,
+        specifications:req.body.specifications,
         ProductImages:[ImagePublicUrl[0].url,ImagePublicUrl[1].url,ImagePublicUrl[2].url,ImagePublicUrl[3].url,ImagePublicUrl[4].url],
         Listed:false,
         reviews:[]
 
     })
-        NewProduct.save()
-        console.log("success")
+        let Product = await NewProduct.save()
+        let UpdateSeller=await Seller.updateOne({_id:req.params.SellerId},{$push:{ProductsCatlog:Product._id}})
         return res.send("ProductAdded")
     } catch(e){
         console.log(e);
@@ -36,8 +37,16 @@ app.post('/AddProductToCatlog',async (req,res)=>{
     return res.status(200).send("ok")
 })
 app.post("/ProvideCatlog/:SellerId",async (req,res)=>{
-    let Products=await ProductSchema.find({sellerId:"123456"})
-    res.status(200).send({CatlogProducts:Products})
+    try{
+    let Products=await Seller.findById(req.params.SellerId)
+    console.log(Products,req.params.SellerId)
+    let result = await ProductSchema.find({ _id: { $in: Products.ProductsCatlog} });
+    console.log(result)
+    res.status(200).send({CatlogProducts:result})
+    }catch(error){
+        console.log(error)
+        res.status(500).send(error)
+    }
 })
 //Cloudinary Upload
 app.post("/upload",upload.single('file'),async (req,res)=>{
