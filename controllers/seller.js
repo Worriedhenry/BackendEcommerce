@@ -91,7 +91,7 @@ app.post( "/seller/login",async (req, res) => {
                     return res.send({sellerId:user._id,token})
                 }
                 else{
-                    return res.status(404).json({message:"Phone or Password is incorrect"})
+                    return res.status(202).json({message:"Phone or Password is incorrect"})
                 }
             })
         }
