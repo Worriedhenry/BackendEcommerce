@@ -3,7 +3,6 @@ var app = express();
 var item = require('../models/Product');
 const { v4: uuidv4 } = require('uuid')
 const User =require("../models/buyer")
-const { parse } = require('path');
 const ReviewSchema=require("../models/reviews")
 const SellerSchema=require("../models/seller")
 app.post('/product/new', async function (req, res, next) {
@@ -69,7 +68,6 @@ app.post('/product/update', async function (req, res, next) {
 
 
 app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
-    console.log(req.params)
     try {
         let data = await item.findOne({ _id: req.params.productId })
         const seller=await SellerSchema.findById(data.sellerId)
@@ -79,7 +77,6 @@ app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
         if (data && req.params.UserId) {
             console.log("ok");
             const user=await User.findById(req.params.UserId)
-            console.log(user.Cart.includes(req.params.productId))
             if (user.Cart.includes(req.params.productId)){
 
                 return res.json({data,InCart:true,Seller:seller.FirstName})

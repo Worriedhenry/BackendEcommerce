@@ -8,10 +8,6 @@ const itemSchema = new mongoose.Schema({
         required: true,
         ref:"Sellers"
     },
-    productId: {
-        type:String,
-        index:true    
-    },
     catagory: {
         type:String,
         required:true,
@@ -41,10 +37,6 @@ const itemSchema = new mongoose.Schema({
     Quantity:{
     type:Number,
     default:-1
-    },
-    created: {
-        type:Date,
-        default: Date.now
     },
     modified:
     {type:Date,
