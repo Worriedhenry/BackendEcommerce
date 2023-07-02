@@ -3,7 +3,6 @@ var app = express();
 var item = require('../models/Product');
 const { v4: uuidv4 } = require('uuid')
 const User =require("../models/buyer")
-const { parse } = require('path');
 const ReviewSchema=require("../models/reviews")
 const SellerSchema=require("../models/seller")
 app.post('/product/new', async function (req, res, next) {
