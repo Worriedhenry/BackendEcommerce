@@ -21,7 +21,7 @@ app.post('/AddProductToCatlog',async (req,res)=>{
         ProductSellingPrice:req.body.ProductSellingPrice,
         ProductNumericalRating:3,
         ProductQuantity:req.body.ProductQuantity,
-        ProductSpecification:[],
+        ProductSpecification:req.body.specifications,
         ProductImages:[ImagePublicUrl[0].url,ImagePublicUrl[1].url,ImagePublicUrl[2].url,ImagePublicUrl[3].url,ImagePublicUrl[4].url],
         Listed:false,
         reviews:[]

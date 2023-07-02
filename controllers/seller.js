@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 const Seller = require('../models/seller');
+const ProductSchema=require("../models/Product")
 const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
 const CookieParser=require("cookie-parser")
@@ -19,7 +20,7 @@ app.get("/admin/info/:SellerId",async (req,res)=>{
     }
 })
 
-app.post("/admin/register",async (req,res)=>{
+app.post("/seller/new",async (req,res)=>{
     try{
     
     const {PhoneNumber,FirstName,LastName,Email,GSTIN,Password,StoreName,StoreLocation}=req.body;
@@ -28,12 +29,10 @@ app.post("/admin/register",async (req,res)=>{
 
             bcrypt.hash(Password,12)
             .then((hashedpassword)=>{
-                const NewSeller=new Seller({
-                    PhoneNumber,FirstName,LastName,Email,Password : hashedpassword,GSTIN,StoreLocation,StoreName
-                })
+                const NewSeller=new Seller(req.body)
                 NewSeller.save()
                 .then(newseller=>{
-                    res.status(200).json({message:"Yup you are ready to sell"})
+                    res.status(200).send({id:newseller._id})
                 })
                 .catch((err)=>{
                     console.log("Error h bro " , err);
@@ -50,8 +49,17 @@ app.post("/admin/register",async (req,res)=>{
     }
     
 })
+app.get("/seller/getproduct/:ProductId",async (req,res)=>{
+    try{
+    let Product=await ProductSchema.findById(req.params.ProductId)
+    res.status(202).send(Product)
+    }catch(err){
+        console.log(err)
+        res.send(err).status(500)
+    }
 
-app.get("/admin/info", auth,async (req,res)=>{
+})
+app.get("/admin/info", async (req,res)=>{
     try {
         console.log(` Cookie is ${req.cookies.jwt} `);
 
@@ -63,6 +71,9 @@ app.get("/admin/info", auth,async (req,res)=>{
     }
 
 })
+
+
+
 module.exports.Login=async (req, res) => {
     try {
         const {PhoneNumber,Password}=req.body

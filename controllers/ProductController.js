@@ -68,6 +68,7 @@ app.post('/product/update', async function (req, res, next) {
 
 
 app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
+    console.log(req.params)
     try {
         let data = await item.findOne({ _id: req.params.productId })
         if(req.params.UserId=="false"){
@@ -92,5 +93,21 @@ app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
         res.status(500).send("Internal serror error occurred")
     }
 });
+app.put("/product/changelisting",async (req,res)=>{
+    const {productId,Listed}=req.body
+    let result=await item.updateOne({_id:productId},{$set:{Listed:!Listed}})
+    res.send(result)
+})
+app.put('/product/updateProduct/:ProductId', async (req, res) => {
+    try{
+    const {ProductTitle,ProductDescription,ProductMRP, ProductSellingPrice, ProductQuantity, ProductBrandName, specifications}=req.body
+    let response=await item.updateOne({_id:req.params.ProductId},{$set:{ProductTitle,ProductDescription,ProductMRP,ProductBrandName,ProductSellingPrice,ProductQuantity,specifications}})
 
+    res.status(200).send(response)
+    }catch(error){
+        console.log(error);
+        res.send(error).status(500)
+    }
+
+});
 module.exports = app;

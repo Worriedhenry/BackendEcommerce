@@ -15,8 +15,6 @@ module.exports.register=async function(req,res){
         let user=await Buyer.findOne({Phone:req.body.Phone})
         if( !user){
             try{
-            console.log(req.body)
-
             bcrypt.hash(Password,12)
             .then((hashedpassword)=>{
                 const newuser=new Buyer({
@@ -30,7 +28,8 @@ module.exports.register=async function(req,res){
                 })
                 newuser.save()
                 .then(newuser=>{
-                    res.status(200).json({message:"SignUp completed"})
+                    const token=jwt.sign({_id:newuser._id},process.env.JWT_KEY);
+                    res.status(200).json({id:newuser._id,token})
                 })
                 .catch((err)=>{
                     console.log("Error h bro " , err);

@@ -18,9 +18,9 @@ app.post("/review/addNew/:ProductId",async (req,res)=>{
     try {
         const Body=req.body
         const productId=req.params.ProductId
-        const NewReview=new Review({
-            Body,productId,CustomerId:"6481efb232b997a8f8af8f67"
-        })
+        const NewReview=new Review(
+            Body
+        )
         let result =await NewReview.save()
         let AddReviewToProduct=await ProductSchema.updateOne({_id:productId},{$push:{reviews:result._id}})
         res.send(AddReviewToProduct)
