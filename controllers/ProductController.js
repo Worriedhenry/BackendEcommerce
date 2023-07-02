@@ -69,7 +69,6 @@ app.post('/product/update', async function (req, res, next) {
 
 
 app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
-    console.log(req.params)
     try {
         let data = await item.findOne({ _id: req.params.productId })
         const seller=await SellerSchema.findById(data.sellerId)
@@ -77,9 +76,7 @@ app.get('/getproduct/:productId/:UserId', async function (req, res, next) {
             return res.json({data,InCart:false,Seller:seller.FirstName})
         }
         if (data && req.params.UserId) {
-            console.log("ok");
             const user=await User.findById(req.params.UserId)
-            console.log(user.Cart.includes(req.params.productId))
             if (user.Cart.includes(req.params.productId)){
 
                 return res.json({data,InCart:true,Seller:seller.FirstName})

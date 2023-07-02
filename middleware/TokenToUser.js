@@ -3,7 +3,6 @@ const jwt=require("jsonwebtoken")
 const TokenToUser=(req,res)=>{
 
     const token= req.cookies.jwt;
-    console.log(token)
     jwt.verify(token ,process.env.JWT_KEY, async (err,payload)=>{
         if(err){
             console.log(err)

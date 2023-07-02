@@ -39,7 +39,6 @@ app.post('/AddProductToCatlog/:SellerId',async (req,res)=>{
 app.post("/ProvideCatlog/:SellerId",async (req,res)=>{
     try{
     let Products=await Seller.findById(req.params.SellerId)
-    console.log(Products,req.params.SellerId)
     let result = await ProductSchema.find({ _id: { $in: Products.ProductsCatlog} });
     console.log(result)
     res.status(200).send({CatlogProducts:result})
@@ -52,7 +51,6 @@ app.post("/ProvideCatlog/:SellerId",async (req,res)=>{
 app.post("/upload",upload.single('file'),async (req,res)=>{
     try{
         const result=await cloudinary.uploader.upload(req.file.path)
-        console.log(process.env.API_SECRET)
         res.send({result:result})
     } catch(e){
         console.log(e)
@@ -60,7 +58,6 @@ app.post("/upload",upload.single('file'),async (req,res)=>{
 })
 app.delete("/deleteProduct/:ProductId",async (req,res)=>{
     try{
-        console.log(req.params.ProductId)
     let response=await ProductSchema.deleteOne({_id:req.params.ProductId})
     res.send("okie")
 }

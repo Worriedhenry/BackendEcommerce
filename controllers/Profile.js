@@ -6,7 +6,6 @@ const jwt=require("jsonwebtoken")
 app.get("/account/getuserInfo/:UserId",async (req,res)=>{
     try{
         let result=await User.findById(req.params.UserId)
-        console.log(result)
         if (result) {
             res.send(result)
         } else {
