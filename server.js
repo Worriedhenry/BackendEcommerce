@@ -12,6 +12,7 @@ mongoose.connect(process.env.MONGODB_URI).then(()=>{
     console.log(err)
 })
 //MiddleWares for app
+const cors=require("cors")
 const corsOptions ={
     origin:'https://fastkart.onrender.com/', 
     credentials:true,            //access-control-allow-credentials:true
