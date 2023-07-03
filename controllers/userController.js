@@ -40,7 +40,7 @@ module.exports.register=async function(req,res){
             }
         }
         else{
-            return res.status(422).json("This number is already registered");
+            return res.status(202).send({message:"This number is already registered"});
         }
     }catch(err){
         console.log("Error in registering" ,err)
