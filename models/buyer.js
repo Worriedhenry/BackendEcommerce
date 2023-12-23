@@ -22,8 +22,7 @@ const buyer_Schema=new mongoose.Schema({
         default:"untitled"
     },
     Password:{
-        type:String,
-        required:[true,"Password is Required"]
+        type:String
     },
     Cart:{
         type:Array,
@@ -36,6 +35,10 @@ const buyer_Schema=new mongoose.Schema({
     Reviews:{
         type:Array,
         default:[]
+    },
+    GoogleLogin:{
+        type:Boolean,
+        default:false
     }
 })
 const Buyer=mongoose.model("users",buyer_Schema);

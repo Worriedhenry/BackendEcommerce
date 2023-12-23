@@ -40,7 +40,6 @@ app.get('/search', async (req, res) => {
                   ],
             }
         );
-            console.log(products)
         res.json({ SearchResult: products });
     } catch (error) {
     }
