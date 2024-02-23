@@ -29,4 +29,11 @@ app.post("/sellerAuth",async (req,res)=>{
 
     })
 })
+
+
+app.get("/initialQuery",async (req,res)=>{
+    return res.status(200).send({})
+})
+
+
 module.exports=app

@@ -4,6 +4,16 @@ require('dotenv').config()
 var Product = require("../models/Product")
 
 
+app.get("/getsearchsuggestion",async (req,res)=>{
+    try {
+        const productTitles = await Product.find({}, 'ProductTitle');
+        const titles = productTitles.map(product => product.ProductTitle);
+        res.status(200).json(      titles );
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+})
 
 app.get('/searchTest', async (req, res) => {
     const { query } = req.query;
